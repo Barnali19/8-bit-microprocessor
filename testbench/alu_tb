@@ -1,0 +1,74 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_unsigned.All;
+ 
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--USE ieee.numeric_std.ALL;
+ 
+ENTITY alu_tb IS
+END ENTITY;
+ 
+ARCHITECTURE behavior OF alu_tb IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT alu
+    PORT(
+         a : IN  std_logic_vector(7 downto 0);
+         b : IN  std_logic_vector(7 downto 0);
+         alu_sel : IN  std_logic_vector(3 downto 0);
+         alu_out : OUT  std_logic_vector(7 downto 0);
+         carry_out : OUT  std_logic;
+         zero_out : OUT  std_logic
+        );
+    END COMPONENT;
+    
+
+   --Inputs
+   signal a : std_logic_vector(7 downto 0);
+   signal b : std_logic_vector(7 downto 0);
+   signal alu_sel : std_logic_vector(3 downto 0);
+   signal alu_out : std_logic_vector(7 downto 0);
+   signal carry_out : std_logic;
+   signal zero_out : std_logic;
+   -- No clocks detected in port list. Replace <clock> below with 
+   -- appropriate port name 
+ 
+   signal i: integer;
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: alu PORT MAP (
+          a => a,
+          b => b,
+          alu_sel =>alu_sel,
+          alu_out => alu_out,
+          carry_out => carry_out,
+          zero_out => zero_out
+        );
+
+   -- Clock process definitions
+  -- <clock>_process :process
+  
+ 
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+     a <= x"0A";
+  b <= x"02";
+  alu_sel<=x"0";
+  
+  
+  for i in 0 to 15 loop 
+   alu_sel <= alu_sel + x"1";
+   wait for 100 ns;
+  end loop;
+      a<= x"F6";
+  b <= x"0A";
+  
+      wait;
+   end process;
+
+END;
